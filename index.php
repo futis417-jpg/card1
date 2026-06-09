@@ -1,4 +1,32 @@
 <?php
+// ==========================================
+// TRUCO MAESTRO: INSTALACIÓN AUTOMÁTICA DE LA BASE DE DATOS
+// ==========================================
+$auto_conn = new mysqli("bexicvrk963sj1k7lcpx-mysql.services.clever-cloud.com", "uoy07khxc6skn9ux", "iK8R0tzGATalX0HJGEFi", "bexicvrk963sj1k7lcpx");
+if (!$auto_conn->connect_error) {
+    // 1. Crear tabla settings si no existe
+    $auto_conn->query("CREATE TABLE IF NOT EXISTS `settings` (
+        `setting_key` varchar(50) NOT NULL,
+        `setting_value` text,
+        `description` text,
+        PRIMARY KEY (`setting_key`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+    // 2. Insertar tus datos y tokens automáticamente
+    $auto_conn->query("INSERT IGNORE INTO `settings` (`setting_key`, `setting_value`, `description`) VALUES 
+    ('bot_token', '8907277053:AAES50hwFyN5xO3s9MvfI_MbobdcGADDLLk', 'Token del bot de Telegram'),
+    ('owner_id', '8398522835', 'ID del propietario del bot'),
+    ('db_host', 'bexicvrk963sj1k7lcpx-mysql.services.clever-cloud.com', 'Host de la base de datos'),
+    ('db_username', 'uoy07khxc6skn9ux', 'Usuario de la base de datos'),
+    ('db_password', 'iK8R0tzGATalX0HJGEFi', 'Contraseña de la base de datos'),
+    ('db_name', 'bexicvrk963sj1k7lcpx', 'Nombre de la base de datos'),
+    ('google_translate_api_key', '', 'Sin API key'),
+    ('proxy_server', '', ''),
+    ('proxy_auth', '', '');");
+    
+    $auto_conn->close();
+}
+// ==========================================
 ini_set("log_errors", TRUE);
 ini_set("error_log", "./error_log.txt");
 
